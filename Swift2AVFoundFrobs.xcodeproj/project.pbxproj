@@ -22,7 +22,6 @@
 		B0B9E1D51B29C4390095D5CD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B9E1D41B29C4390095D5CD /* AudioToolbox.framework */; };
 		B0B9E21C1B2B08580095D5CD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B9E21B1B2B08580095D5CD /* Sequencer.swift */; };
 		B0B9E21E1B2B224C0095D5CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B9E21D1B2B224C0095D5CD /* .gitignore */; };
-		B0B9E2201B2B226E0095D5CD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B0B9E21F1B2B226E0095D5CD /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,7 +290,6 @@
 			files = (
 				B0B9E21C1B2B08580095D5CD /* Sequencer.swift in Sources */,
 				B084A08C1B27940D00B6D37D /* ViewController.swift in Sources */,
-				B0B9E2201B2B226E0095D5CD /* README.md in Sources */,
 				B084A08A1B27940D00B6D37D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,18 +23,22 @@ class Sequencer {
     let soundFontMuseCoreName = "GeneralUser GS MuseScore v1.442"
     
     var engine = AVAudioEngine()
-    let sampler = AVAudioUnitSampler()
+    var sampler = AVAudioUnitSampler()
     var sequencer:AVAudioSequencer!
     
     
     init() {
+        setSessionPlayback()
         
-        setupEngine()
+        (self.engine, self.sampler) = engineSetup()
         
-        //        self.sequencer = AVAudioSequencer()
+        loadSF2PresetIntoSampler(0)
+        
+        addObservers()
+        
+        engineStart()
         
         self.sequencer = AVAudioSequencer(audioEngine: self.engine)
-        
         
         guard let fileURL = NSBundle.mainBundle().URLForResource("sibeliusGMajor", withExtension: "mid") else {
             fatalError("\"sibeliusGMajor.mid\" file not found.")
@@ -47,23 +51,10 @@ class Sequencer {
             fatalError("something screwed up while loading midi file.")
         }
         
-        
         sequencer.prepareToPlay()
         
         print(sequencer)
         
-        
-        
-        //        sequencer.tracks[0].destinationAudioUnit = self.sampler
-        
-        // let tracks = sequencer.tracks
-        // print("track \(tracks[0].destinationAudioUnit)")
-        
-        
-        //        for track in sequencer.tracks {
-        //            track.destinationAudioUnit = self.sampler
-        //            print("track \(track.destinationAudioUnit)")
-        //        }
         
         do {
             try sequencer.start()
@@ -72,6 +63,20 @@ class Sequencer {
         }
         
         
+        
+        // None of the following works.
+        
+        //        sequencer.tracks[0].destinationAudioUnit = self.sampler
+        
+       //  let tracks = sequencer.tracks
+        // print("track \(tracks[0].destinationAudioUnit)")
+        
+        //
+        //                for track in sequencer.tracks {
+        //                    track.destinationAudioUnit = self.sampler
+        //                    print("track \(track.destinationAudioUnit)")
+        //                }
+
         //        let track = AVMusicTrack()
         
         
@@ -80,58 +85,30 @@ class Sequencer {
         
     }
     
-    
-    func setupEngine() {
+    func engineSetup()-> (AVAudioEngine, AVAudioUnitSampler) {
         
-        removeObservers()
-        
-        setSessionPlayback()
-        
-        let hardwareFormat = self.engine.outputNode.outputFormatForBus(0)
-        print("hardware format is \(hardwareFormat)")
-        
-        //let sampler = AVAudioUnitSampler()
-        self.engine.attachNode(self.sampler)
-        
-        // load the soundbank etc.
-        loadSF2PresetIntoSampler(0)
-        
-        // don't connect the sampler to the mixer.
-        // these crash
-        
-        //        engine.connect(sampler, to: mixer, format: hardwareFormat)
-        //        engine.connect(sampler, to: mixer, format: nil)
-        
-        //        let mixerFormat = engine.outputNode.inputFormatForBus(0)
-        //        let mixerFormat = sampler.outputFormatForBus(0)
-        //        let mixerFormat = engine.mainMixerNode.inputFormatForBus(0)
-        //        let mixerFormat = engine.mainMixerNode.outputFormatForBus(0)
-        //        engine.connect(sampler, to: mixer, format: mixerFormat)
-        
-        // this does not crash
-//        engine.connect(sampler, to: engine.outputNode, format: nil)
-        engine.connect(sampler, to: engine.outputNode, format: hardwareFormat)
-        
-        //        engine.connect(sampler, to: engine.outputNode, format: sampler.outputFormatForBus(0))
-        // self.engine.connect(sampler, to: self.engine.mainMixerNode, format: sampler.outputFormatForBus(0))
-        // self.engine.connect(sampler, to: self.engine.mainMixerNode, format: nil)
-        print("connected sampler to mixer")
-        
-        /* this is the error
-2015-06-12 10:08:34.439 Swift2AVFoundFrobs[28164:581005] 10:08:34.438 ERROR:    AVAudioEngineGraph.mm:3649: GetDefaultMusicDevice: required condition is false: outputNode
-*/
-        
+        let engine = AVAudioEngine()
 
-        // this should be automatic
-//        self.engine.connect(self.engine.mainMixerNode, to: self.engine.outputNode, format: hardwareFormat)
-        print("connected engine.outputNode")
+        let output = engine.outputNode
+        let outputHWFormat = output.outputFormatForBus(0)
+
+        let mainMixer = engine.mainMixerNode
+        engine.connect(mainMixer, to: output, format: outputHWFormat)
         
-        print(self.engine)
+        let sampler = AVAudioUnitSampler()
+        engine.attachNode(sampler)
         
-        addObservers()
+        engine.connect(sampler, to: mainMixer, format: outputHWFormat)
+//        engine.connect(sampler, to: output, format: outputHWFormat)
+//        engine.connect(sampler, to: output, format: nil)
+//        engine.connect(sampler, to: mainMixer, format: nil)
+
         
-        engineStart()
+        print(engine)
+        
+        return (engine, sampler)
     }
+    
     
     func bounceEngine() {
         
@@ -198,8 +175,6 @@ class Sequencer {
     
     func loadSF2PresetIntoSampler(preset:UInt8)  {
         
-
-        
         guard let bankURL = NSBundle.mainBundle().URLForResource(self.soundFontMuseCoreName, withExtension: "sf2") else {
             fatalError("\(self.soundFontMuseCoreName).sf2 file not found.")
         }
@@ -239,6 +214,7 @@ class Sequencer {
         }
         
     }
+    
     func setSessionPlayback() {
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         
@@ -252,16 +228,13 @@ class Sequencer {
         } catch {
             print("could not make session active")
         }
-        
     }
     
     // MARK: - notification callbacks
     
     @objc func engineConfigurationChange(notification:NSNotification) {
         print("engine config change")
-        NSLog("Audio engine configuration change: \(notification)")
         engineStart()
-        
         
         //userInfo is nil
         
@@ -296,8 +269,6 @@ class Sequencer {
     
     func sessionRouteChange(notification:NSNotification) {
         print("audio session route change \(notification)")
-        
-        //        let userInfo:Dictionary<String,String!> = notification.userInfo as! Dictionary<String,String!>
         
         if let userInfo = notification.userInfo as? Dictionary<String,AnyObject!> {
             
