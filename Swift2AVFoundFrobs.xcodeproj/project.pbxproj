@@ -14,6 +14,15 @@
 		B084A0941B27940D00B6D37D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B084A0921B27940D00B6D37D /* LaunchScreen.storyboard */; };
 		B084A09F1B27940D00B6D37D /* Swift2AVFoundFrobsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B084A09E1B27940D00B6D37D /* Swift2AVFoundFrobsTests.swift */; };
 		B084A0AA1B27940D00B6D37D /* Swift2AVFoundFrobsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B084A0A91B27940D00B6D37D /* Swift2AVFoundFrobsUITests.swift */; };
+		B0B9E1C91B28CE7A0095D5CD /* GeneralUser GS MuseScore v1.442.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = B0B9E1C61B28CE7A0095D5CD /* GeneralUser GS MuseScore v1.442.sf2 */; };
+		B0B9E1CB1B28CE7A0095D5CD /* sibeliusGMajor.mid in Resources */ = {isa = PBXBuildFile; fileRef = B0B9E1C81B28CE7A0095D5CD /* sibeliusGMajor.mid */; };
+		B0B9E1CD1B29C38C0095D5CD /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B9E1CC1B29C38C0095D5CD /* CoreAudio.framework */; };
+		B0B9E1CF1B29C3920095D5CD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B9E1CE1B29C3920095D5CD /* AVFoundation.framework */; };
+		B0B9E1D11B29C4100095D5CD /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B9E1D01B29C4100095D5CD /* CoreMIDI.framework */; };
+		B0B9E1D51B29C4390095D5CD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B9E1D41B29C4390095D5CD /* AudioToolbox.framework */; };
+		B0B9E21C1B2B08580095D5CD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B9E21B1B2B08580095D5CD /* Sequencer.swift */; };
+		B0B9E21E1B2B224C0095D5CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B9E21D1B2B224C0095D5CD /* .gitignore */; };
+		B0B9E2201B2B226E0095D5CD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B0B9E21F1B2B226E0095D5CD /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +56,15 @@
 		B084A0A51B27940D00B6D37D /* Swift2AVFoundFrobsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Swift2AVFoundFrobsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B084A0A91B27940D00B6D37D /* Swift2AVFoundFrobsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift2AVFoundFrobsUITests.swift; sourceTree = "<group>"; };
 		B084A0AB1B27940D00B6D37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0B9E1C61B28CE7A0095D5CD /* GeneralUser GS MuseScore v1.442.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GeneralUser GS MuseScore v1.442.sf2"; sourceTree = "<group>"; };
+		B0B9E1C81B28CE7A0095D5CD /* sibeliusGMajor.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = sibeliusGMajor.mid; sourceTree = "<group>"; };
+		B0B9E1CC1B29C38C0095D5CD /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		B0B9E1CE1B29C3920095D5CD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B0B9E1D01B29C4100095D5CD /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		B0B9E1D41B29C4390095D5CD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B0B9E21B1B2B08580095D5CD /* Sequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
+		B0B9E21D1B2B224C0095D5CD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B0B9E21F1B2B226E0095D5CD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +72,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B9E1CF1B29C3920095D5CD /* AVFoundation.framework in Frameworks */,
+				B0B9E1CD1B29C38C0095D5CD /* CoreAudio.framework in Frameworks */,
+				B0B9E1D11B29C4100095D5CD /* CoreMIDI.framework in Frameworks */,
+				B0B9E1D51B29C4390095D5CD /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +99,12 @@
 		B084A07D1B27940D00B6D37D = {
 			isa = PBXGroup;
 			children = (
+				B0B9E21F1B2B226E0095D5CD /* README.md */,
+				B0B9E21D1B2B224C0095D5CD /* .gitignore */,
+				B0B9E1D41B29C4390095D5CD /* AudioToolbox.framework */,
+				B0B9E1D01B29C4100095D5CD /* CoreMIDI.framework */,
+				B0B9E1CE1B29C3920095D5CD /* AVFoundation.framework */,
+				B0B9E1CC1B29C38C0095D5CD /* CoreAudio.framework */,
 				B084A0881B27940D00B6D37D /* Swift2AVFoundFrobs */,
 				B084A09D1B27940D00B6D37D /* Swift2AVFoundFrobsTests */,
 				B084A0A81B27940D00B6D37D /* Swift2AVFoundFrobsUITests */,
@@ -97,12 +125,15 @@
 		B084A0881B27940D00B6D37D /* Swift2AVFoundFrobs */ = {
 			isa = PBXGroup;
 			children = (
+				B0B9E1C61B28CE7A0095D5CD /* GeneralUser GS MuseScore v1.442.sf2 */,
+				B0B9E1C81B28CE7A0095D5CD /* sibeliusGMajor.mid */,
 				B084A0891B27940D00B6D37D /* AppDelegate.swift */,
 				B084A08B1B27940D00B6D37D /* ViewController.swift */,
 				B084A08D1B27940D00B6D37D /* Main.storyboard */,
 				B084A0901B27940D00B6D37D /* Assets.xcassets */,
 				B084A0921B27940D00B6D37D /* LaunchScreen.storyboard */,
 				B084A0951B27940D00B6D37D /* Info.plist */,
+				B0B9E21B1B2B08580095D5CD /* Sequencer.swift */,
 			);
 			path = Swift2AVFoundFrobs;
 			sourceTree = "<group>";
@@ -228,8 +259,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B9E1CB1B28CE7A0095D5CD /* sibeliusGMajor.mid in Resources */,
+				B0B9E1C91B28CE7A0095D5CD /* GeneralUser GS MuseScore v1.442.sf2 in Resources */,
 				B084A0941B27940D00B6D37D /* LaunchScreen.storyboard in Resources */,
 				B084A0911B27940D00B6D37D /* Assets.xcassets in Resources */,
+				B0B9E21E1B2B224C0095D5CD /* .gitignore in Resources */,
 				B084A08F1B27940D00B6D37D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,7 +289,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B9E21C1B2B08580095D5CD /* Sequencer.swift in Sources */,
 				B084A08C1B27940D00B6D37D /* ViewController.swift in Sources */,
+				B0B9E2201B2B226E0095D5CD /* README.md in Sources */,
 				B084A08A1B27940D00B6D37D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +519,7 @@
 				B084A0B01B27940D00B6D37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B084A0B11B27940D00B6D37D /* Build configuration list for PBXNativeTarget "Swift2AVFoundFrobsTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +528,7 @@
 				B084A0B31B27940D00B6D37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B084A0B41B27940D00B6D37D /* Build configuration list for PBXNativeTarget "Swift2AVFoundFrobsUITests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +537,7 @@
 				B084A0B61B27940D00B6D37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
