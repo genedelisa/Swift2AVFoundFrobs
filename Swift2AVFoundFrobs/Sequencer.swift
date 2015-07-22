@@ -14,6 +14,8 @@ import AVFoundation
 
 The new `AVAudioSequencer` seems to be broken.
 
+Seems to be fixed in beta4.
+
 See blog post by [following this link.](http://rockhoppertech.com/blog/)
 */
 
@@ -30,7 +32,14 @@ class Sequencer {
     init() {
         setSessionPlayback()
         
-        (self.engine, self.sampler) = engineSetup()
+        //(self.engine, self.sampler) = engineSetup()
+        
+        
+        engine.attachNode(sampler)
+        let outputHWFormat = engine.outputNode.outputFormatForBus(0)
+        let mainMixer = engine.mainMixerNode
+        engine.connect(sampler, to: mainMixer, format: outputHWFormat)
+        print(engine)
         
         loadSF2PresetIntoSampler(0)
         
@@ -48,6 +57,7 @@ class Sequencer {
             try sequencer.loadFromURL(fileURL, options: .SMF_PreserveTracks)
             print("loaded \(fileURL)")
         } catch {
+            print("\(error)")
             fatalError("something screwed up while loading midi file.")
         }
         
@@ -60,29 +70,33 @@ class Sequencer {
             try sequencer.start()
         } catch {
             print("cannot start")
+            print("\(error)")
         }
         
         
-        
-        // None of the following works.
-        
-        //        sequencer.tracks[0].destinationAudioUnit = self.sampler
-        
-       //  let tracks = sequencer.tracks
-        // print("track \(tracks[0].destinationAudioUnit)")
-        
-        //
-        //                for track in sequencer.tracks {
-        //                    track.destinationAudioUnit = self.sampler
-        //                    print("track \(track.destinationAudioUnit)")
-        //                }
+        let tempo = sequencer.tempoTrack
+        print("tempo lengthInBeats \(tempo.lengthInBeats)")
+        // yeah? So what do we do with it? Can't add anything. Can't inspect anything.
 
-        //        let track = AVMusicTrack()
         
-        
-        //        track.destinationAudioUnit =
-        //        track.destinationMIDIEndpoint
-        
+        for track in sequencer.tracks {
+            //track.destinationAudioUnit = self.sampler
+            print("track destinationAudioUnit \(track.destinationAudioUnit)")
+            // this crashes
+            //print("track destinationMIDIEndpoint \(track.destinationMIDIEndpoint)")
+            print("track loopRange \(track.loopRange)")
+            print("track loopingEnabled \(track.loopingEnabled)")
+            print("track numberOfLoops \(track.numberOfLoops)")
+            print("track offsetTime \(track.offsetTime)")
+            print("track muted \(track.muted)")
+            
+            print("track soloed \(track.soloed)")
+            print("track lengthInBeats \(track.lengthInBeats)")
+            print("track lengthInSeconds \(track.lengthInSeconds)")
+            // this crashes
+            //print("track timeResolution \(track.timeResolution)")
+        }
+
     }
     
     func engineSetup()-> (AVAudioEngine, AVAudioUnitSampler) {
@@ -125,6 +139,7 @@ class Sequencer {
             try engine.start()
         } catch {
             print("error couldn't start engine")
+            print("\(error)")
         }
     }
     
@@ -172,7 +187,9 @@ class Sequencer {
         self.sampler.sendMIDIEvent(noteCommand, data1: noteNum, data2: 0)
     }
     
-    
+    let melodicBank = UInt8(kAUSampler_DefaultMelodicBankMSB)
+    let defaultBank = UInt8(kAUSampler_DefaultBankLSB)
+
     func loadSF2PresetIntoSampler(preset:UInt8)  {
         
         guard let bankURL = NSBundle.mainBundle().URLForResource(self.soundFontMuseCoreName, withExtension: "sf2") else {
@@ -192,6 +209,7 @@ class Sequencer {
             
         } catch {
             print("error loading sound bank instrument")
+            print(error)
         }
     }
     
@@ -206,11 +224,15 @@ class Sequencer {
             try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
         } catch {
             print("could not set session category")
+            print(error)
+
         }
         do {
             try session.setActive(true)
         } catch {
             print("could not make session active")
+            print(error)
+
         }
         
     }
@@ -222,11 +244,15 @@ class Sequencer {
             try session.setCategory(AVAudioSessionCategoryPlayback)
         } catch {
             print("could not set session category")
+            print(error)
+
         }
         do {
             try session.setActive(true)
         } catch {
             print("could not make session active")
+            print(error)
+
         }
     }
     

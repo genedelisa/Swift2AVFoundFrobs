@@ -12,11 +12,13 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    var sequencer:Sequencer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        _ = Sequencer()
+        sequencer = Sequencer()
     }
 
     override func didReceiveMemoryWarning() {
