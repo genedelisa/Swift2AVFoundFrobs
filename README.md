@@ -5,6 +5,12 @@
 
 The new `AVAudioSequencer` doesn't work.
 
+Update: in Xcode 7 beta 3 it finally stopped crashing.
+So, yay.
+
+The API still stinks. What are you supposed to do with `AVMusicTrack`s?
+You can't access their content.
+
 
 ## Blog post for this example.
 
@@ -17,7 +23,7 @@ You will need to download a SoundFont. I use the one from [MuseCore](https://mus
 
 ## Bugs
 
-Don't see any. Do you?'
+Don't see any. Do you?
 
 
 ### Buy my kitty Giacomo some cat food
