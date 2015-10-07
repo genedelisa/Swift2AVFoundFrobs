@@ -27,6 +27,8 @@ class Sequencer {
     var engine = AVAudioEngine()
     var sampler = AVAudioUnitSampler()
     var sequencer:AVAudioSequencer!
+    let melodicBank = UInt8(kAUSampler_DefaultMelodicBankMSB)
+    let defaultBank = UInt8(kAUSampler_DefaultBankLSB)
     
     
     init() {
@@ -34,6 +36,7 @@ class Sequencer {
         
         //(self.engine, self.sampler) = engineSetup()
         
+        // set up the engine
         
         engine.attachNode(sampler)
         let outputHWFormat = engine.outputNode.outputFormatForBus(0)
@@ -46,6 +49,8 @@ class Sequencer {
         addObservers()
         
         engineStart()
+        
+        // finished setting up engine
         
         self.sequencer = AVAudioSequencer(audioEngine: self.engine)
         
@@ -60,29 +65,24 @@ class Sequencer {
             print("\(error)")
             fatalError("something screwed up while loading midi file.")
         }
-        
-        sequencer.prepareToPlay()
-        
-        print(sequencer)
-        
-        
-        do {
-            try sequencer.start()
-        } catch {
-            print("cannot start")
-            print("\(error)")
-        }
+        // yeah? So what do we do with it? Can't add anything. Can't inspect anything.
         
         
         let tempo = sequencer.tempoTrack
         print("tempo lengthInBeats \(tempo.lengthInBeats)")
-        // yeah? So what do we do with it? Can't add anything. Can't inspect anything.
+        print("tempo timeResolution \(tempo.timeResolution)")
 
         
         for track in sequencer.tracks {
-            //track.destinationAudioUnit = self.sampler
+            // the tempo track is not included in sequencer.tracks
+            if track == sequencer.tempoTrack {
+                print("tempo track")
+            }
+            
+            // setting the destinations crashes if the sequence has already been started
+            track.destinationAudioUnit = self.sampler
             print("track destinationAudioUnit \(track.destinationAudioUnit)")
-            // this crashes
+            // or
             //print("track destinationMIDIEndpoint \(track.destinationMIDIEndpoint)")
             print("track loopRange \(track.loopRange)")
             print("track loopingEnabled \(track.loopingEnabled)")
@@ -93,11 +93,41 @@ class Sequencer {
             print("track soloed \(track.soloed)")
             print("track lengthInBeats \(track.lengthInBeats)")
             print("track lengthInSeconds \(track.lengthInSeconds)")
-            // this crashes
+            print("")
+            
+            // If loopRange has not been set, the full track will be looped.
+            // track.loopRange = AVBeatRange(start: 0,length: 10)
+
+            
+            // this crashes. do it on the tempo track
             //print("track timeResolution \(track.timeResolution)")
+        }
+        
+        sequencer.prepareToPlay()
+        
+        print(sequencer)
+        
+        //play()
+       
+    }
+    
+    func play() {
+        if sequencer.playing {
+            sequencer.stop()
+        }
+        
+        sequencer.currentPositionInBeats = NSTimeInterval(0)
+        sequencer.prepareToPlay()
+
+        do {
+            try sequencer.start()
+        } catch {
+            print("cannot start sequencer")
+            print("\(error)")
         }
 
     }
+    
     
     func engineSetup()-> (AVAudioEngine, AVAudioUnitSampler) {
         
@@ -186,9 +216,7 @@ class Sequencer {
         let noteCommand = UInt8(0x80 | channel)
         self.sampler.sendMIDIEvent(noteCommand, data1: noteNum, data2: 0)
     }
-    
-    let melodicBank = UInt8(kAUSampler_DefaultMelodicBankMSB)
-    let defaultBank = UInt8(kAUSampler_DefaultBankLSB)
+   
 
     func loadSF2PresetIntoSampler(preset:UInt8)  {
         
@@ -225,14 +253,12 @@ class Sequencer {
         } catch {
             print("could not set session category")
             print(error)
-
         }
         do {
             try session.setActive(true)
         } catch {
             print("could not make session active")
             print(error)
-
         }
         
     }
@@ -245,14 +271,12 @@ class Sequencer {
         } catch {
             print("could not set session category")
             print(error)
-
         }
         do {
             try session.setActive(true)
         } catch {
             print("could not make session active")
             print(error)
-
         }
     }
     

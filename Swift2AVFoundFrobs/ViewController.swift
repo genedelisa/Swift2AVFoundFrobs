@@ -27,6 +27,21 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func play(sender: UIButton) {
+        
+        if let s = sequencer {
+            print("playing")
+            s.play()
+        }
+    }
    
+    @IBAction func noteOn(sender: UIButton) {
+        sequencer?.playNoteOn(0, noteNum: 60, velocity: 100)
+    }
+
+    
+    @IBAction func noteOff(sender: UIButton) {
+        sequencer?.playNoteOff(0, noteNum: 60)
+    }
 }
 
